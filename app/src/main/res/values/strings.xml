@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cuisin</string>
+    <string name="api_key">6c124a6195d94faa880539ca5673de24</string>
+    <string name="query">Top Recipes</string>
 </resources>

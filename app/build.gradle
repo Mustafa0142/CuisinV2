@@ -31,7 +31,7 @@ android {
 dependencies {
 
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0' //implementation of gson for automatic http request handling
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0' // implementation fo retrofit for api calling
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0' // implementation of retrofit for api calling
     implementation 'com.squareup.picasso:picasso:2.8' // for caching and loading images
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
