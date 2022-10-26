@@ -2,7 +2,7 @@ package com.example.cuisin;
 
 import android.content.Context;
 
-import com.example.cuisin.Api.Root;
+import com.example.cuisin.Api.ResultsList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,6 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+
+// ik maak hier gebruik van retrofit om http requests makkelijk te handlen, deze heeft ingebouwde functies
 public class ApiCaller {
     Context ctx;
     Retrofit fit = new Retrofit.Builder()
@@ -24,9 +26,10 @@ public class ApiCaller {
     }
 
     private interface TopRecipes {
+        //we gaan hier de lijst met results ophalen o.b.v. deze properties van query
         @GET("recipes/complexSearch")
-        Call<Root> getTopRecipes(
-                @Query("number") String number,
+        Call<ResultsList> getTopRecipes(
+                @Query("number") Integer number,
                 @Query("addRecipeInformation") Boolean addRecipeInformation,
                 @Query("apiKey") String apiKey,
                 @Query("query") String query
@@ -35,21 +38,23 @@ public class ApiCaller {
 
     public void getTopRecipes(ApiListener apiListener){
         TopRecipes topRecipes = fit.create(TopRecipes.class);
-        Call<Root> rootCall = topRecipes.getTopRecipes(
-                "5",
+        Call<ResultsList> resultsListCall = topRecipes.getTopRecipes(
+                10,
                 true,
                 ctx.getString(R.string.api_key),
                 ctx.getString(R.string.query)
         );
 
-        rootCall.enqueue(new Callback<Root>() {
+        resultsListCall.enqueue(new Callback<ResultsList>() {
             @Override
-            public void onResponse(Call<Root> call, Response<Root> response) {
-                apiListener.getResponse((ApiListener) response.body(), response.message());
+            public void onResponse(Call<ResultsList> resultsListCall, Response<ResultsList> response) {
+                apiListener.getResponse((ResultsList) response.body(), response.message());
+
+                //Log.d("responsebody", response.body().toString());
             }
 
             @Override
-            public void onFailure(Call<Root> call, Throwable t) {
+            public void onFailure(Call<ResultsList> resultsListCall, Throwable t) {
                 apiListener.getError(t.getMessage());
             }
         });
