@@ -36,13 +36,14 @@ public class ApiCaller {
         );
     }
 
-    public void getTopRecipes(ApiListener apiListener){
+    //inputText dient voor de searchbar (ingegeven query is standaard Top Recipes, staat in onCreate functie)
+    public void getTopRecipes(ApiListener apiListener, String inputText){
         TopRecipes topRecipes = fit.create(TopRecipes.class);
         Call<ResultsList> resultsListCall = topRecipes.getTopRecipes(
                 10,
                 true,
                 ctx.getString(R.string.api_key),
-                ctx.getString(R.string.query)
+                inputText
         );
 
         resultsListCall.enqueue(new Callback<ResultsList>() {
