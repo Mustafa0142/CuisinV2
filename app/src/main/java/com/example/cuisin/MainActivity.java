@@ -1,12 +1,18 @@
 package com.example.cuisin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,14 +29,26 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     EditText recipeInput;
     TextView recipesText;
 
+    //for number of recipes shown
+    private Integer recipeAmount;
+    // define the SharedPreferences object
+    private SharedPreferences savedValues;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        apiCaller = new ApiCaller(this);
+
+//      set the default values for the preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+//      get default SharedPreferences object
+        savedValues = PreferenceManager.getDefaultSharedPreferences(this);
+//      get preferences
+        recipeAmount = Integer.parseInt(savedValues.getString("recipe_numbers", "5"));
 
 //      de query van het api gaat standaard op Top Recipes staan. Dan krijgen we onmiddelijk recepten wanneer de app opstart
-        apiCaller.getTopRecipes(apiListener, "Top Recipes");
+        apiCaller = new ApiCaller(this);
+        apiCaller.getTopRecipes(apiListener, "Top Recipes", recipeAmount);
 
 //      edit box in activity_main.xml
         recipeInput = (EditText) findViewById(R.id.recipeInput);
@@ -39,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
     private final ApiListener apiListener = new ApiListener() {
 
-//      wanneer we een response krijgen van de API gaan we onze adapter waar een layoutinflater in zit binden aan onze recycler view
+        //      wanneer we een response krijgen van de API gaan we onze adapter waar een layoutinflater in zit binden aan onze recycler view
 //      zo kunnen we elk recept die we krijgen tonen in een layout
         @Override
         public void getResponse(ResultsList resultsList, String message) {
@@ -62,17 +80,43 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         }
     };
 
-//    als we iets ingeven in de edit box en op enter drukken gaan we de ingegeven text meegeven met inputText en de APi oproepen met de meegeven input.
-//    zo krijgen we resultaten te zien met de ingegeven query.
+    //  als we iets ingeven in de edit box en op enter drukken gaan we de ingegeven text meegeven met inputText en de APi oproepen met de meegeven input.
+//  zo krijgen we resultaten te zien met de ingegeven query.
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
         if (i == EditorInfo.IME_ACTION_SEARCH) {
             String inputText = recipeInput.getText().toString();
-            apiCaller.getTopRecipes(apiListener, inputText);
+            apiCaller.getTopRecipes(apiListener, inputText, recipeAmount);
 
             recipesText = (TextView) findViewById(R.id.textViewRecipe);
             recipesText.setText(inputText + " recipes");
         }
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipes_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // get preferences
+        recipeAmount = Integer.parseInt(savedValues.getString("recipe_numbers", "5"));
+        apiCaller.getTopRecipes(apiListener, recipeInput.getText().toString(), recipeAmount);
     }
 }

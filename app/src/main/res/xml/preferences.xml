@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        app:defaultValue="0"
+        app:dialogTitle="@string/number_of_recipes"
+        app:entries="@array/recipe_number"
+        app:entryValues="@array/recipe_number"
+        app:key="recipe_numbers"
+        app:summary="@string/number_of_recipes_summary"
+        app:title="@string/number_of_recipes"/>
+
+</PreferenceScreen>

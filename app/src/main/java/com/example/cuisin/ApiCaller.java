@@ -37,10 +37,10 @@ public class ApiCaller {
     }
 
     //inputText dient voor de searchbar (ingegeven query is standaard Top Recipes, staat in onCreate functie)
-    public void getTopRecipes(ApiListener apiListener, String inputText){
+    public void getTopRecipes(ApiListener apiListener, String inputText, Integer recipeAmount){
         TopRecipes topRecipes = fit.create(TopRecipes.class);
         Call<ResultsList> resultsListCall = topRecipes.getTopRecipes(
-                10,
+                recipeAmount,
                 true,
                 ctx.getString(R.string.api_key),
                 inputText
