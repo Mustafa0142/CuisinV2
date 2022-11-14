@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cuisin.Adapters.TopRecipesAdapter;
+import com.example.cuisin.Api.Length;
 import com.example.cuisin.Api.ResultsList;
 
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 //      get preferences
         recipeAmount = Integer.parseInt(savedValues.getString("recipe_numbers", "5"));
 
-//      de query van het api gaat standaard op Top Recipes staan. Dan krijgen we onmiddelijk recepten wanneer de app opstart
+//      de query van de api gaat standaard op Top Recipes staan. Dan krijgen we onmiddelijk recepten wanneer de app opstart
         apiCaller = new ApiCaller(this);
         apiCaller.getTopRecipes(apiListener, "Top Recipes", recipeAmount);
 
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             recyclerView.setHasFixedSize(true);
             manager.setOrientation(GridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(manager);
-            topRecipesAdapter = new TopRecipesAdapter(MainActivity.this, resultsList.results);
+            topRecipesAdapter = new TopRecipesAdapter(MainActivity.this, resultsList.results, recipeDetails);
 
 //            for (int i = 0; i < resultsList.results.size(); i++) {
 //                Log.d("results", resultsList.results.get(i).title);
@@ -79,6 +81,18 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
         }
     };
+
+    //hier gaan we uitvoeren wat er gaat gebeuren als je op een recept klikt.
+    private final TopRecipesAdapter.RecipeDetails recipeDetails = new TopRecipesAdapter.RecipeDetails() {
+        @Override
+        public void onRecipeClick(String spoonacularSourceUrl) {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(spoonacularSourceUrl));
+            startActivity(i);
+        }
+    };
+
+    ///////////////////////////////////////searchbar/////////////////////////////////////////////////
 
     //  als we iets ingeven in de edit box en op enter drukken gaan we de ingegeven text meegeven met inputText en de APi oproepen met de meegeven input.
 //  zo krijgen we resultaten te zien met de ingegeven query.
@@ -93,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         }
         return true;
     }
+
+    ///////////////////////////////////////settings activity/////////////////////////////////////////////////
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
