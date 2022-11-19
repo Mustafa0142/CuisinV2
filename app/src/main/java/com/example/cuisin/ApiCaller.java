@@ -15,7 +15,8 @@ import retrofit2.http.Query;
 
 // ik maak hier gebruik van retrofit om http requests makkelijk te handlen, deze heeft ingebouwde functies
 public class ApiCaller {
-    Context ctx;
+    private final String API_KEY = "6c124a6195d94faa880539ca5673de24";
+    private Context ctx;
     Retrofit fit = new Retrofit.Builder()
             .baseUrl("https://api.spoonacular.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -42,7 +43,7 @@ public class ApiCaller {
         Call<ResultsList> resultsListCall = topRecipes.getTopRecipes(
                 recipeAmount,
                 true,
-                ctx.getString(R.string.api_key),
+                API_KEY,
                 inputText
         );
 

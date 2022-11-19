@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cardList"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recipeLayout"
+    android:background="#FFF5E4"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="13dp"
+    android:layout_marginRight="15dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/recipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:background="@drawable/layoutborder">
-
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/recipeImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:scaleType="centerCrop"/>
+            android:foregroundTint="@color/black"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/Circular"
+            app:strokeColor="@color/purple_200"
+            app:strokeWidth="3dp"
+            android:padding="4dp">
+        </com.google.android.material.imageview.ShapeableImageView>
 
-        <TextView
-            android:id="@+id/top_recipe"
-            android:text="Top Recipe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:textSize="18sp"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/recipe_prep"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/top_recipe"
+                    android:text="Top Recipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:padding="3dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/recipe_prep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Prep time"
+                    android:textSize="14sp"
+                    android:layout_margin="10dp"
+                    android:padding="3dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
         </LinearLayout>
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</FrameLayout>

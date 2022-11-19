@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Cuisin</string>
-    <string name="api_key">6c124a6195d94faa880539ca5673de24</string>
-
     <!--    voor settingsfragment-->
     <string name="menu_settings">Settings</string>
     <string name="number_of_recipes">Amount of recipes?</string>

@@ -4,16 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cuisin.Api.Result;
 import com.example.cuisin.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,10 +51,10 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
 
         Picasso.get().load(list.get(position).image).into(holder.recipeImage); //afbeelding van het recept binden
         holder.top_recipe.setText(list.get(position).title); //titel van het recept binden
-        holder.recipe_prep.setText("Ready in " + list.get(position).readyInMinutes + " minutes"); //preparatie tijd binden
+        holder.recipe_prep.setText("Ready in " + list.get(position).readyInMinutes + " minutes!"); //preparatie tijd binden
 
         //als er op een cardlist item geklikt wordt gaan we de url opvragen
-        holder.cardList.setOnClickListener(new View.OnClickListener() {
+        holder.recipeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 details.onRecipeClick(list.get(holder.getAdapterPosition()).spoonacularSourceUrl);
@@ -69,15 +68,13 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        CardView cardList;
-        LinearLayout recipeLayout;
-        ImageView recipeImage;
+        FrameLayout recipeLayout;
+        ShapeableImageView recipeImage;
         TextView top_recipe, recipe_prep;
 
         public ViewHolder(@NonNull View itemView) {
 //          declaratie van de id's in de top_recipes.xml bestand
             super(itemView);
-            cardList = itemView.findViewById(R.id.cardList);
             recipeLayout = itemView.findViewById(R.id.recipeLayout);
             recipeImage = itemView.findViewById(R.id.recipeImage);
             top_recipe = itemView.findViewById((R.id.top_recipe));

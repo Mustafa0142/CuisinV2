@@ -2,6 +2,7 @@ package com.example.cuisin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cuisin.Adapters.TopRecipesAdapter;
-import com.example.cuisin.Api.Length;
 import com.example.cuisin.Api.ResultsList;
 
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
@@ -39,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//      override van dark mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
 
 //      set the default values for the preferences
