@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -20,11 +19,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cuisin.Adapters.TopRecipesAdapter;
+import com.example.cuisin.Api.RecipeInformation;
+import com.example.cuisin.Api.Result;
 import com.example.cuisin.Api.ResultsList;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
 
     ApiCaller apiCaller;
+    ArrayList<Result> list;
     TopRecipesAdapter topRecipesAdapter;
     RecyclerView recyclerView;
     EditText recipeInput;
@@ -38,9 +42,10 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
 //      override van dark mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        setContentView(R.layout.activity_main);
 
 //      set the default values for the preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -56,20 +61,29 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 //      edit box in activity_main.xml
         recipeInput = (EditText) findViewById(R.id.recipeInput);
         recipeInput.setOnEditorActionListener(this);
+
+//      hier gaan we uitvoeren wat er gaat gebeuren als je op een recept klikt. Openen van detailsactivity
+        topRecipesAdapter = new TopRecipesAdapter(MainActivity.this, list, new TopRecipesAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(String recipeId) {
+                startActivity(new Intent(MainActivity.this, DetailsActivity.class)
+                        .putExtra("recipeId", recipeId));
+            }
+        });
     }
 
     private final ApiListener apiListener = new ApiListener() {
 
-        //      wanneer we een response krijgen van de API gaan we onze adapter waar een layoutinflater in zit binden aan onze recycler view
+//      wanneer we een response krijgen van de API gaan we onze adapter waar een layoutinflater in zit binden aan onze recycler view
 //      zo kunnen we elk recept die we krijgen tonen in een layout
         @Override
-        public void getResponse(ResultsList resultsList, String message) {
+        public void getResponse(ResultsList resultsList) {
             GridLayoutManager manager = new GridLayoutManager(MainActivity.this, 1);
             recyclerView = findViewById(R.id.tr_recycler);
             recyclerView.setHasFixedSize(true);
             manager.setOrientation(GridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(manager);
-            topRecipesAdapter = new TopRecipesAdapter(MainActivity.this, resultsList.results, recipeDetails);
+            topRecipesAdapter = new TopRecipesAdapter(MainActivity.this, resultsList.results, topRecipesAdapter.itemClickListener);
 
 //            for (int i = 0; i < resultsList.results.size(); i++) {
 //                Log.d("results", resultsList.results.get(i).title);
@@ -78,18 +92,13 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             recyclerView.setAdapter(topRecipesAdapter);
         }
         @Override
+        public void getResponse(RecipeInformation recipeInformation){
+
+        }
+
+        @Override
         public void getError(String message) {
             Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    //hier gaan we uitvoeren wat er gaat gebeuren als je op een recept klikt.
-    private final TopRecipesAdapter.RecipeDetails recipeDetails = new TopRecipesAdapter.RecipeDetails() {
-        @Override
-        public void onRecipeClick(String spoonacularSourceUrl) {
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(spoonacularSourceUrl));
-            startActivity(i);
         }
     };
 
@@ -129,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         // get preferences

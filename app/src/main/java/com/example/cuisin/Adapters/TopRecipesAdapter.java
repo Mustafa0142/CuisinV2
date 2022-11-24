@@ -23,19 +23,12 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
     List<Result> list; //lijst van alle eigenschappen van het recept
     LayoutInflater inflater; // om recepten in een layout te steken
 
-    //we geven de id mee van het recept
-    public interface RecipeDetails
-    {
-        void onRecipeClick(String spoonacularSourceUrl);
-    };
-    RecipeDetails details;
-
     //constructor
-    public TopRecipesAdapter(Context ctx, List<Result> list, RecipeDetails details) {
+    public TopRecipesAdapter(Context ctx, List<Result> list, ItemClickListener itemClickListener) {
         this.ctx = ctx;
         this.list = list;
         this.inflater = LayoutInflater.from(ctx);
-        this.details = details;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -53,11 +46,10 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
         holder.top_recipe.setText(list.get(position).title); //titel van het recept binden
         holder.recipe_prep.setText("Ready in " + list.get(position).readyInMinutes + " minutes!"); //preparatie tijd binden
 
-        //als er op een cardlist item geklikt wordt gaan we de url opvragen
-        holder.recipeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                details.onRecipeClick(list.get(holder.getAdapterPosition()).spoonacularSourceUrl);
+                itemClickListener.onItemClick(String.valueOf(list.get(holder.getAdapterPosition()).id));
             }
         });
     }
@@ -66,6 +58,13 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
     public int getItemCount() {
         return list.size();
     }
+
+    //we geven de id mee van het recept
+    public interface ItemClickListener
+    {
+        void onItemClick(String recipeId);
+    }
+    public ItemClickListener itemClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         FrameLayout recipeLayout;
