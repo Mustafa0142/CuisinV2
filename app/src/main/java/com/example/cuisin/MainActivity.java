@@ -92,14 +92,11 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             recyclerView.setAdapter(topRecipesAdapter);
         }
         @Override
-        public void getResponse(RecipeInformation recipeInformation){
-
-        }
-
-        @Override
         public void getError(String message) {
             Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
         }
+        @Override
+        public void getResponse(RecipeInformation recipeInformation){}
     };
 
     ///////////////////////////////////////searchbar/////////////////////////////////////////////////

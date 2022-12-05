@@ -1,18 +1,33 @@
 package com.example.cuisin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import com.example.cuisin.Adapters.TopRecipesAdapter;
+import com.example.cuisin.Api.ExtendedIngredient;
 import com.example.cuisin.Api.RecipeInformation;
 import com.example.cuisin.Api.ResultsList;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class DetailsActivity extends AppCompatActivity {
+    GridView ingredients_list;
     TextView recipe_title, recipe_source, recipe_likes,
              recipe_servings, recipe_score, recipe_prep;
     Button recipe_button;
@@ -37,6 +52,7 @@ public class DetailsActivity extends AppCompatActivity {
         recipe_prep = findViewById(R.id.recipePrep);
         recipe_button = findViewById(R.id.recipeButton);
         recipe_image = findViewById(R.id.recipeImage);
+        ingredients_list = findViewById(R.id.ingredients_listview);
 
         apiCaller = new ApiCaller(this);
         apiCaller.getRecipeInformation(detailsListener, recipeId);
@@ -49,7 +65,7 @@ public class DetailsActivity extends AppCompatActivity {
             recipe_source.setText(recipeInformation.sourceName);
             recipe_likes.setText(recipeInformation.aggregateLikes + " likes");
             recipe_servings.setText(recipeInformation.servings + " servings!");
-            recipe_score.setText("Score: " + recipeInformation.spoonacularScore + "/100");
+            recipe_score.setText("Health score: " + recipeInformation.healthScore + "/100");
             recipe_prep.setText("Ready in " + recipeInformation.readyInMinutes + " minutes!");
             Picasso.get().load(recipeInformation.image).into(recipe_image);
 
@@ -61,6 +77,29 @@ public class DetailsActivity extends AppCompatActivity {
                     startActivity(launchBrowser);
                 }
             });
+
+            ///ingredienten tonen in detailspage
+
+            List<ExtendedIngredient> items = recipeInformation.extendedIngredients;
+
+            // create a List of Map<String, ?> objects
+            ArrayList<HashMap<String, String>> data =
+                    new ArrayList<HashMap<String, String>>();
+            for (ExtendedIngredient item : items) {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("original", item.original);
+                data.add(map);
+            }
+
+            // create the resource, from, and to variables
+            int resource = R.layout.recipe_ingredients;
+            String[] from = {"original"};
+            int[] to = {R.id.ingredient_name};
+
+            // create and set the adapter
+            SimpleAdapter adapter =
+                    new SimpleAdapter(DetailsActivity.this, data, resource, from, to);
+            ingredients_list.setAdapter(adapter);
         }
 
         @Override
