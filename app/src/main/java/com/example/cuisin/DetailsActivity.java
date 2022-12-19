@@ -1,22 +1,17 @@
 package com.example.cuisin;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.example.cuisin.Adapters.TopRecipesAdapter;
 import com.example.cuisin.Api.ExtendedIngredient;
 import com.example.cuisin.Api.RecipeInformation;
 import com.example.cuisin.Api.ResultsList;
@@ -54,7 +49,7 @@ public class DetailsActivity extends AppCompatActivity {
         recipe_image = findViewById(R.id.recipeImage);
         ingredients_list = findViewById(R.id.ingredients_listview);
 
-        apiCaller = new ApiCaller(this);
+        apiCaller = new ApiCaller();
         apiCaller.getRecipeInformation(detailsListener, recipeId);
     }
 
@@ -79,7 +74,6 @@ public class DetailsActivity extends AppCompatActivity {
             });
 
             ///ingredienten tonen in detailspage
-
             List<ExtendedIngredient> items = recipeInformation.extendedIngredients;
 
             // create a List of Map<String, ?> objects

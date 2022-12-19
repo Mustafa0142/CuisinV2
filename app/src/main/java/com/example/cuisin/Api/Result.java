@@ -34,6 +34,5 @@ public class Result {
     public ArrayList<Object> dishTypes;
     public ArrayList<String> diets;
     public ArrayList<Object> occasions;
-    public ArrayList<AnalyzedInstruction> analyzedInstructions;
     public String spoonacularSourceUrl;
 }

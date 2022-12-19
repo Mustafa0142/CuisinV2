@@ -21,27 +21,11 @@ import retrofit2.http.Query;
 public class ApiCaller {
     private final String API_KEY = "c4887d7664494b67bca752f492cbd59f";
     private final String DOCUMENTATION = "https://spoonacular.com/food-api/docs";
-    private Context ctx;
+
     Retrofit fit = new Retrofit.Builder()
             .baseUrl("https://api.spoonacular.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-
-    public ApiCaller(Context ctx) {
-        this.ctx = ctx;
-    }
-
-    private interface TopRecipes {
-        //we gaan hier de lijst met results ophalen o.b.v. deze properties van query
-        @GET("recipes/complexSearch")
-        Call<ResultsList> getTopRecipes(
-                @Query("number") Integer number,
-                @Query("addRecipeInformation") Boolean addRecipeInformation,
-                @Query("instructionsRequired") Boolean instructionsRequired,
-                @Query("apiKey") String apiKey,
-                @Query("query") String query
-        );
-    }
 
     //inputText dient voor de searchbar (ingegeven query is standaard Top Recipes, staat in onCreate functie)
     public void getTopRecipes(ApiListener apiListener, String inputText, Integer recipeAmount){
@@ -68,17 +52,6 @@ public class ApiCaller {
                 apiListener.getError(t.getMessage());
             }
         });
-    }
-
-    private interface RecipeDetails
-    {
-        @GET("recipes/{id}/information")
-        Call<RecipeInformation> getRecipeInformation(
-                //omdat de id in de url een path is gaan we een path implementeren en deze declareren aan int id
-                @Path("id") int recipeId,
-                @Query("includeNutrition") Boolean includeNutrition,
-                @Query("apiKey") String apiKey
-        );
     }
 
     public void getRecipeInformation(ApiListener apiListener, int recipeId){

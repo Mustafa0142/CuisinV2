@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         recipeAmount = Integer.parseInt(savedValues.getString("recipe_numbers", "5"));
 
 //      de query van de api gaat standaard op Top Recipes staan. Dan krijgen we onmiddelijk recepten wanneer de app opstart
-        apiCaller = new ApiCaller(this);
+        apiCaller = new ApiCaller();
         apiCaller.getTopRecipes(apiListener, "Top Recipes", recipeAmount);
 
 //      edit box in activity_main.xml
