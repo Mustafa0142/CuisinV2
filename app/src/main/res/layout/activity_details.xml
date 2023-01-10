@@ -38,7 +38,7 @@
                     android:id="@+id/recipeTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Title"
+                    android:text="@string/details_title"
                     android:textSize="24sp"
                     android:textColor="@color/purple_200"
                     android:textStyle="bold"
@@ -55,7 +55,7 @@
                     android:textSize="16sp"
                     android:padding="5dp"
                     android:layout_marginStart="5dp"
-                    android:text="Source">
+                    android:text="@string/details_source">
                 </TextView>
 
                 <TextView
@@ -68,13 +68,13 @@
                     android:padding="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="30dp"
-                    android:text="Likes">
+                    android:text="@string/details_likes">
                 </TextView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ingredients:"
+                    android:text="@string/details_ingredients"
                     android:textColor="@color/black"
                     android:padding="5dp"
                     android:layout_marginStart="5dp"
@@ -94,7 +94,7 @@
                     android:id="@+id/recipeScore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Score"
+                    android:text="@string/details_score"
                     android:textSize="17sp"
                     android:textColor="@color/purple_200"
                     android:layout_marginStart="5dp"
@@ -106,7 +106,7 @@
                     android:id="@+id/recipeServings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Servings"
+                    android:text="@string/details_servings"
                     android:textSize="17sp"
                     android:textColor="@color/purple_200"
                     android:textStyle="bold"
@@ -118,7 +118,7 @@
                     android:id="@+id/recipePrep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Preparation"
+                    android:text="@string/details_prep"
                     android:textSize="17sp"
                     android:textColor="@color/purple_200"
                     android:textStyle="bold"
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="30dp"
                     android:drawableLeft="@android:drawable/ic_menu_view"
-                    android:text="View recipe online">
+                    android:text="@string/details_button">
                 </Button>
             </LinearLayout>
         </ScrollView>

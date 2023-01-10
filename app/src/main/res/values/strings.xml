@@ -16,4 +16,34 @@
         <item>9</item>
         <item>10</item>
     </string-array>
+    <!--    voor searchbar-->
+    <string name="searchbar_input">Search for a recipe, Njam!</string>
+    <!--    voor main activity-->
+    <string name="top_recipes">Top Recipes</string>
+    <!-- voor top_recipes.xml-->
+    <string name="top_recipe">Top Recipe</string>
+    <string name="prep_time">Prep time</string>
+    <!-- voor details activity-->
+    <string name="details_title">Title</string>
+    <string name="details_source">Source</string>
+    <string name="details_likes">Likes</string>
+    <string name="details_ingredients">Ingredients:</string>
+    <string name="details_score">Score</string>
+    <string name="details_servings">Servings</string>
+    <string name="details_prep">Preparation</string>
+    <string name="details_button">View recipe online</string>
+    <!-- voor register activity-->
+    <string name="register_username">Username</string>
+    <string name="register_phone">Phone</string>
+    <string name="register_email">E-Mail</string>
+    <string name="register_password">Password</string>
+    <string name="register_register">Register</string>
+    <string name="register_login">Login</string>
+    <string name="register_alternative">Login?</string>
+    <!-- voor login activity-->
+    <string name="login_email">E-Mail</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">Login</string>
+    <string name="login_alternative">Register?</string>
 </resources>

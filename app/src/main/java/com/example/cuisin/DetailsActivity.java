@@ -34,7 +34,6 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-//      om bar te verbergen van boven
         this.getSupportActionBar().hide();
 
         int recipeId = Integer.parseInt(getIntent().getStringExtra("recipeId"));

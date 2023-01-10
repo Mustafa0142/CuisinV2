@@ -16,8 +16,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-
-// ik maak hier gebruik van retrofit om http requests makkelijk te handlen, deze heeft ingebouwde functies
 public class ApiCaller {
     private final String API_KEY = "c4887d7664494b67bca752f492cbd59f";
     private final String DOCUMENTATION = "https://spoonacular.com/food-api/docs";
@@ -27,7 +25,6 @@ public class ApiCaller {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    //inputText dient voor de searchbar (ingegeven query is standaard Top Recipes, staat in onCreate functie)
     public void getTopRecipes(ApiListener apiListener, String inputText, Integer recipeAmount){
         TopRecipes topRecipes = fit.create(TopRecipes.class);
         Call<ResultsList> resultsListCall = topRecipes.getTopRecipes(
@@ -38,13 +35,10 @@ public class ApiCaller {
                 inputText
         );
 
-//      we gaan asynchronisch een request verzenden
         resultsListCall.enqueue(new Callback<ResultsList>() {
             @Override
             public void onResponse(@NonNull Call<ResultsList> resultsListCall, @NonNull Response<ResultsList> response) {
                 apiListener.getResponse((ResultsList) response.body());
-
-                //Log.d("responsebody", response.body().toString());
             }
 
             @Override

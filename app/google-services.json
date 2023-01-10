@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "384717454564",
+    "project_id": "cuisin-v2",
+    "storage_bucket": "cuisin-v2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384717454564:android:d3e345482483878c1f40f1",
+        "android_client_info": {
+          "package_name": "com.example.cuisin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "384717454564-bm1kk1f2q0s9t6gp1s6vu3boptj71evc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdaig6WdMrUZCGWVV3G95a6MTCcmEFrJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "384717454564-bm1kk1f2q0s9t6gp1s6vu3boptj71evc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -31,7 +31,7 @@
 
                 <TextView
                     android:id="@+id/top_recipe"
-                    android:text="Top Recipe"
+                    android:text="@string/top_recipe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
@@ -44,7 +44,7 @@
                     android:id="@+id/recipe_prep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Prep time"
+                    android:text="@string/prep_time"
                     android:textSize="14sp"
                     android:layout_margin="10dp"
                     android:padding="3dp"

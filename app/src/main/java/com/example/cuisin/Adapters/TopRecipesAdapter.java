@@ -20,8 +20,8 @@ import java.util.List;
 public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.ViewHolder> {
 
     Context ctx;
-    List<Result> list; //lijst van alle eigenschappen van het recept
-    LayoutInflater inflater; // om recepten in een layout te steken
+    List<Result> list;
+    LayoutInflater inflater;
 
     //constructor
     public TopRecipesAdapter(Context ctx, List<Result> list, ItemClickListener itemClickListener) {
@@ -30,11 +30,10 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
         this.inflater = LayoutInflater.from(ctx);
         this.itemClickListener = itemClickListener;
     }
-
     @NonNull
     @Override
     public TopRecipesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.top_recipes, parent, false); // voor elk recept die wordt opgehaald uit de API wordt er een layout geinflate.
+        View view = inflater.inflate(R.layout.top_recipes, parent, false);
 
         return new ViewHolder(view);
     }
@@ -42,9 +41,9 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull TopRecipesAdapter.ViewHolder holder, int position) {
 
-        Picasso.get().load(list.get(position).image).into(holder.recipeImage); //afbeelding van het recept binden
-        holder.top_recipe.setText(list.get(position).title); //titel van het recept binden
-        holder.recipe_prep.setText("Ready in " + list.get(position).readyInMinutes + " minutes!"); //preparatie tijd binden
+        Picasso.get().load(list.get(position).image).into(holder.recipeImage);
+        holder.top_recipe.setText(list.get(position).title);
+        holder.recipe_prep.setText("Ready in " + list.get(position).readyInMinutes + " minutes!");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +71,6 @@ public class TopRecipesAdapter extends RecyclerView.Adapter<TopRecipesAdapter.Vi
         TextView top_recipe, recipe_prep;
 
         public ViewHolder(@NonNull View itemView) {
-//          declaratie van de id's in de top_recipes.xml bestand
             super(itemView);
             recipeLayout = itemView.findViewById(R.id.recipeLayout);
             recipeImage = itemView.findViewById(R.id.recipeImage);

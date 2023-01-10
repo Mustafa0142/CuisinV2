@@ -7,7 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface TopRecipes {
-    //we gaan hier de lijst met results ophalen o.b.v. deze properties van query
     @GET("recipes/complexSearch")
     Call<ResultsList> getTopRecipes(
             @Query("number") Integer number,

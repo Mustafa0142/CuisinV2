@@ -34,9 +34,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     EditText recipeInput;
     TextView recipesText;
 
-    //for number of recipes shown
     private Integer recipeAmount;
-    // define the SharedPreferences object
     private SharedPreferences savedValues;
 
     @Override
@@ -47,11 +45,9 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 //      override van dark mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-//      set the default values for the preferences
+
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-//      get default SharedPreferences object
         savedValues = PreferenceManager.getDefaultSharedPreferences(this);
-//      get preferences
         recipeAmount = Integer.parseInt(savedValues.getString("recipe_numbers", "5"));
 
 //      de query van de api gaat standaard op Top Recipes staan. Dan krijgen we onmiddelijk recepten wanneer de app opstart
@@ -73,9 +69,6 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     }
 
     private final ApiListener apiListener = new ApiListener() {
-
-//      wanneer we een response krijgen van de API gaan we onze adapter waar een layoutinflater in zit binden aan onze recycler view
-//      zo kunnen we elk recept die we krijgen tonen in een layout
         @Override
         public void getResponse(ResultsList resultsList) {
             GridLayoutManager manager = new GridLayoutManager(MainActivity.this, 1);
@@ -84,11 +77,6 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             manager.setOrientation(GridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(manager);
             topRecipesAdapter = new TopRecipesAdapter(MainActivity.this, resultsList.results, topRecipesAdapter.itemClickListener);
-
-//            for (int i = 0; i < resultsList.results.size(); i++) {
-//                Log.d("results", resultsList.results.get(i).title);
-//            }
-
             recyclerView.setAdapter(topRecipesAdapter);
         }
         @Override
